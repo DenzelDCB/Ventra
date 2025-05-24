@@ -20,12 +20,19 @@ function Home() {
 const handleSignUp = async () => {
   const numericAge = parseInt(age);
 
-  // Validate input
-  if (!email || !password || password.length < 6) {
-    alert("Please enter a valid email and a password with at least 6 characters.");
+  // Validate email
+  if (!email) {
+    alert("Please enter your email.");
     return;
   }
 
+  // Validate password
+  if (!password || password.length < 6) {
+    alert("Password must be at least 6 characters long.");
+    return;
+  }
+
+  // Validate age
   if (isNaN(numericAge) || numericAge < 0) {
     alert("Please enter a valid age.");
     return;
@@ -41,16 +48,13 @@ const handleSignUp = async () => {
   if (numericAge <= 25) {
     setRole('mentee');
     proceedToSignUp('mentee');
-    return;
-  }
-
-  if (numericAge <= 90) {
+  } else if (numericAge <= 90) {
     setShowRoleChoice(true);
-    return;
+  } else {
+    alert("Please enter an age between 11 and 90.");
   }
-
-  alert("Please enter an age between 11 and 90.");
 };
+
 
 const proceedToSignUp = async (finalRole) => {
   try {
