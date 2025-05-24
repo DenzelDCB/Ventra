@@ -83,10 +83,20 @@ function App() {
             ))}
           </ul>
         </div>
-      )}
-      ) : (
-        <p>No collaborating mentors yet.</p>
-      )}
+        {acceptedMentors.length > 0 ? (
+          <div>
+            <h3>Mentors You're Collaborating With:</h3>
+            <ul>
+              {acceptedMentors.map(m => (
+                <li key={m.chatId}>
+                  Mentor: <b>{m.mentorEmail}</b> (Chat ID: {m.chatId.slice(0,6)})
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <p>No mentors you've collaborated with yet.</p>
+        )}
     </div>
   );
 }
