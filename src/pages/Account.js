@@ -17,41 +17,40 @@ function Home() {
   const [showRoleChoice, setShowRoleChoice] = useState(false);
   const { setRole } = useRole(); 
 
-  const handleSignUp = async () => {
-    const numericAge = parseInt(age);
+const handleSignUp = async () => {
+  const numericAge = parseInt(age);
 
-if (isNaN(numericAge) || numericAge < 0 || !email || !password || password.length < 6) {
-      alert("Please enter a valid age.");
-      return;
-    }
+  // Validate input
+  if (!email || !password || password.length < 6) {
+    alert("Please enter a valid email and a password with at least 6 characters.");
+    return;
+  }
 
-    if (numericAge < 11) {
-      alert("Sorry, you must be at least 11 years old to sign up.");
-      return;
-    }
+  if (isNaN(numericAge) || numericAge < 0) {
+    alert("Please enter a valid age.");
+    return;
+  }
 
-    if (numericAge >= 11 && numericAge <= 25) {
-      setRole('mentee');
-      proceedToSignUp('mentee');
-    }
+  if (numericAge < 11) {
+    alert("Sorry, you must be at least 11 years old to sign up.");
+    return;
+  }
 
-    if (numericAge >= 26 && numericAge <= 90) {
-      setShowRoleChoice(true);
-    }
-    sessionStorage['age'] = numericAge
-  };
+  sessionStorage.setItem('age', numericAge);
 
-  const handleSkillChange = (e) => {
-    const { value, checked } = e.target;
+  if (numericAge <= 25) {
+    setRole('mentee');
+    proceedToSignUp('mentee');
+    return;
+  }
 
-    if (checked) {
-      if (selectedSkills.length < 5) {
-        setSelectedSkills([...selectedSkills, value]);
-      }
-    } else {
-      setSelectedSkills(selectedSkills.filter((skill) => skill !== value));
-    }
-  };
+  if (numericAge <= 90) {
+    setShowRoleChoice(true);
+    return;
+  }
+
+  alert("Please enter an age between 11 and 90.");
+};
 
 const proceedToSignUp = async (finalRole) => {
   try {
