@@ -3,9 +3,10 @@ import { auth, db } from '../firebase';
 import { collection, query, where, onSnapshot, doc, updateDoc, serverTimestamp } from 'firebase/firestore';
 
 function App() {
-  const [userEmail, setUserEmail] = useState('Previewer');
-  const [userId, setUserId] = useState(null);
-  const [mentorRequests, setMentorRequests] = useState([]);
+const [userEmail, setUserEmail] = useState('Previewer');
+const [userId, setUserId] = useState(null);
+const [mentorRequests, setMentorRequests] = useState([]);
+const [acceptedMentors, setAcceptedMentors] = useState([]); 
 
   useEffect(() => {
     const unsubscribeAuth = auth.onAuthStateChanged(user => {
