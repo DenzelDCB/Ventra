@@ -110,7 +110,7 @@ function MentorSearch() {
             </div>
           ))
         ) : (
-          !loading && <p>No mentors found. Create an account to view all mentors.</p>
+          !loading && <p>No mentors found. If you do not have an account, create one to view all mentors.</p>
         )}
       </div>
     </div>
