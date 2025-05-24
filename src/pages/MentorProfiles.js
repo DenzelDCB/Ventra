@@ -222,7 +222,7 @@ function MentorProfile() {
           <ul>
             {acceptedMentors.map(m => (
               <li key={m.chatId}>
-                Mentor: <b>{m.mentorEmail}</b> (Chat ID: {m.chatId?.slice(0, 6)})
+                Mentor: <b>{m.mentorEmail}</b> (Chat ID: {m.chatId.slice(0, 6)})
               </li>
             ))}
           </ul>
@@ -235,7 +235,7 @@ function MentorProfile() {
           <ul>
             {myAcceptedMentorRequests.map(m => (
               <li key={m.chatId}>
-                Mentor: <b>{m.mentorEmail}</b> (Chat ID: {m.chatId?.slice(0, 6)})
+                Mentor: <b>{m.mentorEmail}</b> (Chat ID: {m.chatId.slice(0, 6)})
               </li>
             ))}
           </ul>
