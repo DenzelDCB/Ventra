@@ -20,7 +20,7 @@ function Home() {
   const handleSignUp = async () => {
     const numericAge = parseInt(age);
 
-    if (!numericAge || numericAge < 0 || !email || !password || password.length < 6) {
+if (isNaN(numericAge) || numericAge < 0 || !email || !password || password.length < 6) {
       alert("Please enter a valid age.");
       return;
     }
