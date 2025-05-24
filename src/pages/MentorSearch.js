@@ -36,12 +36,9 @@ function MentorSearch() {
   };
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      if (user) fetchMentors();
-      else setMentors([]);
-    });
-    return () => unsubscribe();
+    fetchMentors();
   }, []);
+
 
   const filtered = searchTerm
     ? mentors.filter(m =>
@@ -116,7 +113,6 @@ function MentorSearch() {
           !loading && <p>No mentors found. Create an account to see mentors.</p>
         )}
       </div>
-      <div><p>If same mentor is requested more than once, more than one chat will be made, but same ID.with the same mentor. If mentor accepts, it will become more than one of the same tab, only for mentor. The last of the same ID tabs is the main one.</p></div>
     </div>
   );
 }
