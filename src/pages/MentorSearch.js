@@ -99,18 +99,18 @@ function MentorSearch() {
                   : <li>No skills listed.</li>
                 }
               </ul>
-              {role === 'mentee' && (
+              {(
                 <button
                   style={{ padding: '8px', borderRadius: '8px', cursor: 'pointer', border: '1px solid black', }}
                   onClick={() => requestMentor(m)}
                 >
-                  Request Mentor
+                    {role === 'mentee' && 'Request Mentor'}{role === 'mentor' && 'Connect with Mentor'}
                 </button>
               )}
             </div>
           ))
         ) : (
-          !loading && <p>No mentors found. Create an account to see mentors.</p>
+          !loading && <p>No mentors found. Create an account to view all mentors.</p>
         )}
       </div>
     </div>
