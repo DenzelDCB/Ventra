@@ -84,6 +84,9 @@ function App() {
           </ul>
         </div>
       )}
+      ) : (
+        <p>No collaborating mentors yet.</p>
+      )}
     </div>
   );
 }
