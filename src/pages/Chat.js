@@ -127,7 +127,7 @@ function Chat() {
     <div>
       <h2>Chat Rooms</h2>
 
-      {acceptedChats.length === 0 && <p>You have no accepted mentor chats to participate in. If you do, wait a while as Chat might take a while to stabilize internet.</p>}
+      {acceptedChats.length === 0 && <p>You have no accepted mentor chats to participate in. If you do, wait a while as Chat might take a while to connect to the internet.</p>}
 
       {acceptedChats.length > 0 && (
         <div style={{ marginBottom: 16 }}>
@@ -152,7 +152,7 @@ function Chat() {
       )}
 
       {currentChatID && !canChat && (
-        <p>Your request for this chat is not accepted, so you cannot send messages.</p>
+        <p>Your request for this chat has not been accepted, so you cannot send messages.</p>
       )}
 
       {currentChatID && (
