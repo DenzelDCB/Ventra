@@ -15,19 +15,11 @@ function MentorProfile() {
   const [userEmail, setUserEmail] = useState('Previewer');
   const [userId, setUserId] = useState(null);
 
-  // Requests from mentees (menteeId requests mentorship from this mentor)
   const [menteeRequests, setMenteeRequests] = useState([]);
-
-  // Requests from other mentors for collaboration
   const [mentorCollabRequests, setMentorCollabRequests] = useState([]);
-
-  // Accepted mentees
   const [acceptedMentees, setAcceptedMentees] = useState([]);
-
-  // Accepted mentor collaborators
   const [acceptedMentors, setAcceptedMentors] = useState([]);
 
-  // Listen for auth changes
   useEffect(() => {
     const unsubscribeAuth = auth.onAuthStateChanged(user => {
       if (user) {
@@ -75,13 +67,14 @@ function MentorProfile() {
     return () => unsubscribe();
   }, [userId]);
 
-  // Listen for mentor collaboration requests
+  // Listen for mentor collaboration requests — UPDATED here with status filter in query!
   useEffect(() => {
     if (!userId) return;
 
     const q = query(
       collection(db, 'mentorRequests'),
-      where('mentorId', '==', userId)
+      where('mentorId', '==', userId),
+      where('status', '==', 'accepted') // <-- Add this line here
     );
 
     const unsubscribe = onSnapshot(q, async snapshot => {
@@ -89,15 +82,13 @@ function MentorProfile() {
       setMentorCollabRequests(requests);
 
       const accepted = await Promise.all(
-        requests
-          .filter(req => req.status === 'accepted')
-          .map(async req => {
-            const mentorDoc = await getDoc(doc(db, 'users', req.requesterId));
-            return {
-              chatId: req.id,
-              mentorEmail: mentorDoc.exists() ? mentorDoc.data().email : 'Unknown Mentor',
-            };
-          })
+        requests.map(async req => {
+          const mentorDoc = await getDoc(doc(db, 'users', req.requesterId));
+          return {
+            chatId: req.id,
+            mentorEmail: mentorDoc.exists() ? mentorDoc.data().email : 'Unknown Mentor',
+          };
+        })
       );
       setAcceptedMentors(accepted);
     });
@@ -105,7 +96,6 @@ function MentorProfile() {
     return () => unsubscribe();
   }, [userId]);
 
-  // Accept request (shared for mentee or mentor request)
   const handleAccept = async (collectionName, requestId) => {
     const requestRef = doc(db, collectionName, requestId);
     await updateDoc(requestRef, {
@@ -114,7 +104,6 @@ function MentorProfile() {
     });
   };
 
-  // Reject request (shared for mentee or mentor request)
   const handleReject = async (collectionName, requestId) => {
     const requestRef = doc(db, collectionName, requestId);
     await updateDoc(requestRef, {
