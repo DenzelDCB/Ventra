@@ -17,6 +17,18 @@ function Home() {
   const [showRoleChoice, setShowRoleChoice] = useState(false);
   const { setRole } = useRole(); 
 
+const handleSkillChange = (e) => {
+    const { value, checked } = e.target;
+
+    if (checked) {
+      if (selectedSkills.length < 5) {
+        setSelectedSkills([...selectedSkills, value]);
+      }
+    } else {
+      setSelectedSkills(selectedSkills.filter((skill) => skill !== value));
+    }
+  };
+
 const handleSignUp = async () => {
   const numericAge = parseInt(age);
 
