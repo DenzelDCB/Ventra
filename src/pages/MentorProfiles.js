@@ -50,55 +50,58 @@ function App() {
     });
   };
 
-  return (
-    <div className="App">
-      <h2>Mentor Profile</h2>
-      <p>Hello <i><b>{userEmail}</b></i></p>
+return (
+  <div className="App">
+    <h2>Mentor Profile</h2>
+    <p>Hello <i><b>{userEmail}</b></i></p>
 
-      {mentorRequests.length > 0 && (
-        <div style={{ marginTop: '30px' }}>
-          <h3>Mentor Requests</h3>
-          <ul style={{ listStyle: 'none', padding: 0 }}>
-            {mentorRequests.map(req => (
-              <li key={req.id} style={{ border: '1px solid #ccc', marginBottom: '12px', padding: '10px', borderRadius: '6px' }}>
-                <p><b>Mentee ID:</b> {req.menteeId}</p>
-                <p><b>Status:</b> {req.status}</p>
-                {req.status === 'pending' && (
-                  <>
-                    <button 
-                      style={{ marginRight: '10px', padding: '6px 12px', cursor: 'pointer' }}
-                      onClick={() => handleAccept(req.id)}
-                    >
-                      Accept
-                    </button>
-                    <button 
-                      style={{ padding: '6px 12px', cursor: 'pointer' }}
-                      onClick={() => handleReject(req.id)}
-                    >
-                      Reject
-                    </button>
-                  </>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-        {acceptedMentors.length > 0 ? (
-          <div>
-            <h3>Mentors You're Collaborating With:</h3>
-            <ul>
-              {acceptedMentors.map(m => (
-                <li key={m.chatId}>
-                  Mentor: <b>{m.mentorEmail}</b> (Chat ID: {m.chatId.slice(0,6)})
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : (
-          <p>No mentors you've collaborated with yet.</p>
-        )}
-    </div>
-  );
+    {mentorRequests.length > 0 && (
+      <div style={{ marginTop: '30px' }}>
+        <h3>Mentor Requests</h3>
+        <ul style={{ listStyle: 'none', padding: 0 }}>
+          {mentorRequests.map(req => (
+            <li key={req.id} style={{ border: '1px solid #ccc', marginBottom: '12px', padding: '10px', borderRadius: '6px' }}>
+              <p><b>Mentee ID:</b> {req.menteeId}</p>
+              <p><b>Status:</b> {req.status}</p>
+              {req.status === 'pending' && (
+                <>
+                  <button 
+                    style={{ marginRight: '10px', padding: '6px 12px', cursor: 'pointer' }}
+                    onClick={() => handleAccept(req.id)}
+                  >
+                    Accept
+                  </button>
+                  <button 
+                    style={{ padding: '6px 12px', cursor: 'pointer' }}
+                    onClick={() => handleReject(req.id)}
+                  >
+                    Reject
+                  </button>
+                </>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    {/* If you're showing acceptedMentors too, it needs to exist and be declared */}
+    {acceptedMentors && acceptedMentors.length > 0 ? (
+      <div>
+        <h3>Mentors You're Collaborating With:</h3>
+        <ul>
+          {acceptedMentors.map(m => (
+            <li key={m.chatId}>
+              Mentor: <b>{m.mentorEmail}</b> (Chat ID: {m.chatId.slice(0, 6)})
+            </li>
+          ))}
+        </ul>
+      </div>
+    ) : (
+      <p>No mentors you've collaborated with yet.</p>
+    )}
+  </div>
+);
 }
 
 export default App;
