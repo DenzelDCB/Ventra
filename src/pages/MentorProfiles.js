@@ -19,7 +19,7 @@ function MentorProfile() {
   const [mentorCollabRequests, setMentorCollabRequests] = useState([]);
   const [acceptedMentees, setAcceptedMentees] = useState([]);
   const [acceptedMentors, setAcceptedMentors] = useState([]);
-  const [myAcceptedMentorRequests, setMyAcceptedMentorRequests] = useState([]); // NEW
+  const [myAcceptedMentorRequests, setMyAcceptedMentorRequests] = useState([]);
 
   useEffect(() => {
     const unsubscribeAuth = auth.onAuthStateChanged(user => {
@@ -97,7 +97,6 @@ function MentorProfile() {
     return () => unsubscribe();
   }, [userId]);
 
-  // 🔥 NEW: Get mentors this user requested and was accepted
   useEffect(() => {
     if (!userId) return;
 
@@ -223,7 +222,7 @@ function MentorProfile() {
           <ul>
             {acceptedMentors.map(m => (
               <li key={m.chatId}>
-                Mentor: <b>{m.mentorEmail}</b> (Chat ID: {m.chatId.slice(0, 6)})
+                Mentor: <b>{m.mentorEmail}</b> (Chat ID: {m.chatId?.slice(0, 6)})
               </li>
             ))}
           </ul>
@@ -236,7 +235,7 @@ function MentorProfile() {
           <ul>
             {myAcceptedMentorRequests.map(m => (
               <li key={m.chatId}>
-                Mentor: <b>{m.mentorEmail}</b> (Chat ID: {m.chatId.slice(0, 6)})
+                Mentor: <b>{m.mentorEmail}</b> (Chat ID: {m.chatId?.slice(0, 6)})
               </li>
             ))}
           </ul>
