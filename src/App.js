@@ -56,7 +56,7 @@ const AppContent = ({ page, setPage }) => {
         )}
         {role && userEmail && (
           <button onClick={() => setPage('chat1')} style={{ border: '0px', backgroundColor: 'white', cursor: 'pointer' }}>
-          {role === 'mentee' && 'Chat with a mentor'} {role === 'mentor' && 'Chat with a mentee'}
+          Chat
           </button>
         )}
         <button onClick={() => setPage('search1')} style={{ border: '0px', backgroundColor: 'white', cursor: 'pointer' }}>
