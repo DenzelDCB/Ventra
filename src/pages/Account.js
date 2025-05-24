@@ -173,7 +173,7 @@ const proceedToSignUp = async (finalRole) => {
 
   return (
     <div>
-      <h1>Welcome to Vetra</h1>
+      <h1>Welcome to Ventra</h1>
       <p>Create an account or log in to continue.</p>
 
       <input
