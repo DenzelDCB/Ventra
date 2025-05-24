@@ -19,7 +19,6 @@ function MentorProfile() {
   const [mentorCollabRequests, setMentorCollabRequests] = useState([]);
   const [acceptedMentees, setAcceptedMentees] = useState([]);
   const [acceptedMentors, setAcceptedMentors] = useState([]);
-  const [myMentorCollaborations, setMyMentorCollaborations] = useState([]);
 
   useEffect(() => {
     const unsubscribeAuth = auth.onAuthStateChanged(user => {
@@ -33,7 +32,6 @@ function MentorProfile() {
         setMentorCollabRequests([]);
         setAcceptedMentees([]);
         setAcceptedMentors([]);
-        setMyMentorCollaborations([]);
       }
     });
     return () => unsubscribeAuth();
@@ -77,48 +75,27 @@ function MentorProfile() {
     );
 
     const unsubscribe = onSnapshot(q, async snapshot => {
-      const requests = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setMentorCollabRequests(requests);
-
-      const accepted = await Promise.all(
-        requests
-          .filter(req => req.status === 'accepted')
-          .map(async req => {
-            const mentorDoc = await getDoc(doc(db, 'users', req.requesterId));
-            return {
-              chatId: req.id,
-              mentorEmail: mentorDoc.exists() ? mentorDoc.data().email : 'Unknown Mentor',
-            };
-          })
-      );
-      setAcceptedMentors(accepted);
-    });
-
-    return () => unsubscribe();
-  }, [userId]);
-
-  // New: listen for collaborations the user initiated
-  useEffect(() => {
-    if (!userId) return;
-
-    const q = query(
-      collection(db, 'mentorRequests'),
-      where('requesterId', '==', userId),
-      where('status', '==', 'accepted')
-    );
-
-    const unsubscribe = onSnapshot(q, async snapshot => {
-      const collaborations = await Promise.all(
+      const requests = await Promise.all(
         snapshot.docs.map(async docSnap => {
           const data = docSnap.data();
-          const mentorDoc = await getDoc(doc(db, 'users', data.mentorId));
+          const requesterDoc = await getDoc(doc(db, 'users', data.requesterId));
           return {
-            chatId: docSnap.id,
-            mentorEmail: mentorDoc.exists() ? mentorDoc.data().email : 'Unknown Mentor',
+            id: docSnap.id,
+            ...data,
+            requesterEmail: requesterDoc.exists() ? requesterDoc.data().email : 'Unknown Mentor',
           };
         })
       );
-      setMyMentorCollaborations(collaborations);
+      setMentorCollabRequests(requests);
+
+      const accepted = requests
+        .filter(req => req.status === 'accepted')
+        .map(req => ({
+          chatId: req.id,
+          mentorEmail: req.requesterEmail,
+        }));
+
+      setAcceptedMentors(accepted);
     });
 
     return () => unsubscribe();
@@ -183,7 +160,7 @@ function MentorProfile() {
           <ul style={{ listStyle: 'none', padding: 0 }}>
             {mentorCollabRequests.map(req => (
               <li key={req.id} style={{ border: '1px solid #ccc', marginBottom: '12px', padding: '10px', borderRadius: '6px' }}>
-                <p><b>From Mentor ID:</b> {req.requesterId}</p>
+                <p><b>From Mentor:</b> {req.requesterEmail}</p>
                 <p><b>Status:</b> {req.status}</p>
                 {req.status === 'pending' && (
                   <>
@@ -233,20 +210,6 @@ function MentorProfile() {
         </div>
       ) : (
         <p>No mentors you're collaborating with yet.</p>
-      )}
-
-      {/* Collaborations This Mentor Initiated */}
-      {myMentorCollaborations.length > 0 && (
-        <div style={{ marginTop: '30px' }}>
-          <h3>Mentors You Sent Collaboration Requests To</h3>
-          <ul>
-            {myMentorCollaborations.map(m => (
-              <li key={m.chatId}>
-                Mentor: <b>{m.mentorEmail}</b> (Chat ID: {m.chatId.slice(0, 6)})
-              </li>
-            ))}
-          </ul>
-        </div>
       )}
     </div>
   );
