@@ -135,7 +135,7 @@ function MentorProfile() {
           </ul>
         </div>
       ) : (
-        <p>No collaborating mentors yet.</p>
+        <p>No mentors you're collaborating with yet.</p>
       )}
     </div>
   );
