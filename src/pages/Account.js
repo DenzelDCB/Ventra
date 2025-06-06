@@ -8,9 +8,6 @@ import { mentorSkills } from '../data/mentorSkills'; // Import the skills data
 
 export let logOutb = false;
 
-// This sessionStorage call runs on every render.
-// Consider moving it inside a useEffect or signIn/signOut handlers
-// if auth.currentUser might not be immediately available on initial render
 sessionStorage.setItem('user', auth.currentUser?.email || 'Previewer');
 
 function Home() {
@@ -114,9 +111,7 @@ function Home() {
 
         await setDoc(doc(db, "users", uid), {
           email,
-          role: 'mentee',
-          // Mentees might not need skills initially, or you can adjust validation
-          skills: selectedSkills,
+          role: 'mentee'
         });
 
         setRole(finalRole);
@@ -175,32 +170,36 @@ function Home() {
         <button onClick={() => setLignip(1)} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Sign up</button>
       </div>
 
-      <div style={{border: '0px solid black', padding: '5px', margin: '5px'}}>
-        <input
-          type="email"
-          placeholder="Your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          style={{ padding: '8px', borderRadius: '8px', border: '1px solid black' }}
-        />
-        <s>- </s>
-        <input
-          type="password"
-          placeholder="Password: *********"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={{ padding: '8px', borderRadius: '8px', border: '1px solid black' }}
-        />
-        {lignip === 1 && (
-          <s>--</s><input
-            type="number"
-            placeholder="Your age"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-            style={{ width: 210, padding: '8px', borderRadius: '8px', border: '1px solid black' }}
-          />
-        )}
-      </div>
+      <div style={{border: '0px solid black', padding: '5px', margin: '5px'}}>
+        <input
+          type="email"
+          placeholder="Your email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          style={{ padding: '8px', borderRadius: '8px', border: '1px solid black' }}
+        />
+        <s>- </s>
+        <input
+          type="password"
+          placeholder="Password: *********"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          style={{ padding: '8px', borderRadius: '8px', border: '1px solid black' }}
+        />
+        {lignip === 1 && (
+            // Wrap the adjacent elements in a React Fragment
+          <>
+            <s>--</s>
+            <input
+              type="number"
+              placeholder="Your age"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+              style={{ width: 210, padding: '8px', borderRadius: '8px', border: '1px solid black' }}
+            />
+          </>
+        )}
+      </div>
       <br /><br />
       {lignip === 1 && (
         <button onClick={handleSignUp} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Sign Up</button>
@@ -221,7 +220,6 @@ function Home() {
             <label>Please choose between 1 and 3 areas of expertise.</label>
             <hr />
 
-            {/* Dynamically render skill categories and checkboxes */}
             {Array.from(new Set(mentorSkills.map(skill => skill.category))).map(category => (
               <div key={category}>
                 <h3>{category}</h3>
