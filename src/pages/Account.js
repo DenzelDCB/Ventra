@@ -4,6 +4,7 @@ import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { useRole } from './RoleContext';
+import { mentorSkills } from '../data/mentorSkills'; // Import the skills data
 
 export let logOutb = false;
 
@@ -22,7 +23,8 @@ function Home() {
     const { value, checked } = e.target;
 
     if (checked) {
-      if (selectedSkills.length < 5) {
+      // You need to adjust the max selection from 5 to 3 based on your new requirement
+      if (selectedSkills.length < 3) { // Changed from 5 to 3
         setSelectedSkills([...selectedSkills, value]);
       }
     } else {
@@ -76,8 +78,9 @@ function Home() {
       }
 
       if (age > 25 && finalRole !== 'mentee') {
-        if (!selectedSkills || selectedSkills.length === 0) {
-          alert('You need at least 1 area of expertise.');
+        // Updated skill validation for min 1, max 3
+        if (selectedSkills.length < 1 || selectedSkills.length > 3) {
+          alert('You need to choose between 1 and 3 areas of expertise.');
           return;
         }
 
@@ -163,15 +166,16 @@ function Home() {
     <div>
       <h1>Welcome to Ventra</h1>
       <h3>Create an account or log in to continue.</h3>
-      <button onClick={() => setLignip(0)} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Log in</button> | <button onClick={() => setLignip(1)} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Sign up</button>
+      <button>Mentor</button><button>Mentee</button>
+      <button onClick={() => setLignip(0)}>Log in</button>
+      <button onClick={() => setLignip(1)}>Sign up</button>
 
       <div style={{border: '0px solid black', padding: '5px', margin: '5px'}}>
         <input
           type="email"
-          placeholder="Email: email@example.com"
+          placeholder="Your email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          style={{padding: '8px', borderRadius: '8px', border: '1px solid black' }}
         />
         <s>- </s>
         <input
@@ -179,15 +183,14 @@ function Home() {
           placeholder="Password: *********"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          style={{padding: '8px', borderRadius: '8px', border: '1px solid black' }}
         />
         {lignip === 1 && (
           <input
             type="number"
-            placeholder="Age"
+            placeholder="Your age (Not needed for Log in)"
             value={age}
             onChange={(e) => setAge(e.target.value)}
-            style={{ width: 210, padding: '8px', borderRadius: '8px', border: '1px solid black' }}
+            style={{ width: 210 }}
           />
         )}
       </div>
@@ -208,112 +211,53 @@ function Home() {
           <button onClick={() => proceedToSignUp('mentee')} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Mentee</button>
           <br /><br />
           <div style={{width: '500px', border: '1px solid black', margin: '5px', padding: '5px', borderRadius: '4px',}}>
-            <label>Please choose your best area of expertise. Max 5. Min 1</label>
+            <label>Please choose between 1 and 3 areas of expertise.</label>
             <hr />
             <h3>Programming</h3>
             <hr />
-            <div><label>Software Engineer (Back-End): </label>
-              <input
-                type="checkbox"
-                name="skills"
-                value="Software Engineer (Backend Developer)"
-                onChange={handleSkillChange}
-                checked={selectedSkills.includes("Software Engineer (Backend Developer)")}
-                disabled={!selectedSkills.includes("Software Engineer (Backend Developer)") && selectedSkills.length >= 5}
-              />
-            </div>
-            <div><label>Software Engineer (Front-End): </label>
-              <input
-                type="checkbox"
-                name="skills"
-                value="Software Engineer (Frontend Developer)"
-                onChange={handleSkillChange}
-                checked={selectedSkills.includes("Software Engineer (Frontend Developer)")}
-                disabled={!selectedSkills.includes("Software Engineer (Frontend Developer)") && selectedSkills.length >= 5}
-              />
-            </div>
-            <div><label>Software Engineer (Full-Stack): </label>
-              <input
-                type="checkbox"
-                name="skills"
-                value="Software Engineer (Full Stack Developer)"
-                onChange={handleSkillChange}
-                checked={selectedSkills.includes("Software Engineer (Full Stack Developer)")}
-                disabled={!selectedSkills.includes("Software Engineer (Full Stack Developer)") && selectedSkills.length >= 5}
-              />
-            </div>
-            <div><label>DevOps: </label>
-              <input
-                type="checkbox"
-                name="skills"
-                value="DevOps"
-                onChange={handleSkillChange}
-                checked={selectedSkills.includes("DevOps")}
-                disabled={!selectedSkills.includes("DevOps") && selectedSkills.length >= 5}
-              />
-            </div>
-            <div><label>Java Developer: </label>
-              <input
-                type="checkbox"
-                name="skills"
-                value="Java Developer"
-                onChange={handleSkillChange}
-                checked={selectedSkills.includes("Java Developer")}
-                disabled={!selectedSkills.includes("Java Developer") && selectedSkills.length >= 5}
-              />
-            </div>
-            <div><label>JavaScript Developer: </label>
-              <input
-                type="checkbox"
-                name="skills"
-                value="JavaScript Developer"
-                onChange={handleSkillChange}
-                checked={selectedSkills.includes("JavaScript Developer")}
-                disabled={!selectedSkills.includes("JavaScript Developer") && selectedSkills.length >= 5}
-              />
-            </div>
-            <div><label>Python Developer: </label>
-              <input
-                type="checkbox"
-                name="skills"
-                value="Python Developer"
-                onChange={handleSkillChange}
-                checked={selectedSkills.includes("Python Developer")}
-                disabled={!selectedSkills.includes("Python Developer") && selectedSkills.length >= 5}
-              />
-            </div>
+            {mentorSkills.filter(skill => ["Software Engineer (Backend Developer)", "Software Engineer (Frontend Developer)", "Software Engineer (Full Stack Developer)", "DevOps", "Java Developer", "JavaScript Developer", "Python Developer"].includes(skill.value)).map((skill) => (
+              <div key={skill.value}>
+                <label>{skill.label}: </label>
+                <input
+                  type="checkbox"
+                  name="skills"
+                  value={skill.value}
+                  onChange={handleSkillChange}
+                  checked={selectedSkills.includes(skill.value)}
+                  disabled={!selectedSkills.includes(skill.value) && selectedSkills.length >= 3} // Changed from 5 to 3
+                />
+              </div>
+            ))}
             <h3>ML & AI</h3>
             <hr />
-            <div><label>Machine Learning Analyst: </label>
-              <input
-                type="checkbox"
-                name="skills"
-                value="Machine Learning Analyst"
-                onChange={handleSkillChange}
-                checked={selectedSkills.includes("Machine Learning Analyst")}
-                disabled={!selectedSkills.includes("Machine Learning Analyst") && selectedSkills.length >= 5}
-              />
-            </div>
-            <div><label>Deep Learning Analyst: </label>
-              <input
-                type="checkbox"
-                name="skills"
-                value="Deep Learning Analyst"
-                onChange={handleSkillChange}
-                checked={selectedSkills.includes("Deep Learning Analyst")}
-                disabled={!selectedSkills.includes("Deep Learning Analyst") && selectedSkills.length >= 5}
-              />
-            </div>
-            <div><label>Data Science Analyst: </label>
-              <input
-                type="checkbox"
-                name="skills"
-                value="Data Science Analyst"
-                onChange={handleSkillChange}
-                checked={selectedSkills.includes("Data Science Analyst")}
-                disabled={!selectedSkills.includes("Data Science Analyst") && selectedSkills.length >= 5}
-              />
-            </div>
+            {mentorSkills.filter(skill => ["Machine Learning Analyst", "Deep Learning Analyst", "Data Science Analyst"].includes(skill.value)).map((skill) => (
+              <div key={skill.value}>
+                <label>{skill.label}: </label>
+                <input
+                  type="checkbox"
+                  name="skills"
+                  value={skill.value}
+                  onChange={handleSkillChange}
+                  checked={selectedSkills.includes(skill.value)}
+                  disabled={!selectedSkills.includes(skill.value) && selectedSkills.length >= 3} // Changed from 5 to 3
+                />
+              </div>
+            ))}
+            <h3>Other Specializations</h3>
+            <hr />
+            {mentorSkills.filter(skill => ["Cloud Architect", "Cybersecurity Specialist", "UI/UX Designer"].includes(skill.value)).map((skill) => (
+              <div key={skill.value}>
+                <label>{skill.label}: </label>
+                <input
+                  type="checkbox"
+                  name="skills"
+                  value={skill.value}
+                  onChange={handleSkillChange}
+                  checked={selectedSkills.includes(skill.value)}
+                  disabled={!selectedSkills.includes(skill.value) && selectedSkills.length >= 3} // Changed from 5 to 3
+                />
+              </div>
+            ))}
           </div>
         </div>
       )}
