@@ -23,7 +23,6 @@ function Home() {
     const { value, checked } = e.target;
 
     if (checked) {
-      // You need to adjust the max selection from 5 to 3 based on your new requirement
       if (selectedSkills.length < 3) { // Changed from 5 to 3
         setSelectedSkills([...selectedSkills, value]);
       }
