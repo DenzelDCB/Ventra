@@ -4,14 +4,14 @@ import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { useRole } from './RoleContext';
-import { mentorSkills } from '../data/mentorSkills'; // Import the skills data
+import { mentorSkills } from '../data/mentorSkills';
 
 export let logOutb = false;
 
 sessionStorage.setItem('user', auth.currentUser?.email || 'Previewer');
 
 function Home() {
-  const [lignip, setLignip] = useState(1); // 1 for Sign Up, 0 for Log In
+  const [lignip, setLignip] = useState(1);
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,7 +23,7 @@ function Home() {
     const { value, checked } = e.target;
 
     if (checked) {
-      if (selectedSkills.length < 3) { // Max 3 skills
+      if (selectedSkills.length < 3) {
         setSelectedSkills([...selectedSkills, value]);
       }
     } else {
@@ -77,7 +77,6 @@ function Home() {
       }
 
       if (age > 25 && finalRole !== 'mentee') {
-        // Validate skill selection for mentors (min 1, max 3)
         if (selectedSkills.length < 1 || selectedSkills.length > 3) {
           alert('You need to choose between 1 and 3 areas of expertise.');
           return;
@@ -111,7 +110,8 @@ function Home() {
 
         await setDoc(doc(db, "users", uid), {
           email,
-          role: 'mentee'
+          role: 'mentee',
+          skills: selectedSkills,
         });
 
         setRole(finalRole);
@@ -165,50 +165,58 @@ function Home() {
       <h1>Welcome to Ventra</h1>
       <h3>Create an account or log in to continue.</h3>
 
-      <div style={{border: '1px solid black', margin: '5px', padding: '5px', display: 'flex', gap: '10px', alignItems: 'center' }}>
+      <div style={{
+          margin: '15px 5px',
+          padding: '5px',
+          display: 'flex',
+          gap: '15px',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
         <button onClick={() => setLignip(0)} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Log in</button>
         <button onClick={() => setLignip(1)} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Sign up</button>
       </div>
 
-      <div style={{border: '0px solid black', padding: '5px', margin: '5px'}}>
-        <input
-          type="email"
-          placeholder="Your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          style={{ padding: '8px', borderRadius: '8px', border: '1px solid black' }}
-        />
-        <s>- </s>
-        <input
-          type="password"
-          placeholder="Password: *********"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={{ padding: '8px', borderRadius: '8px', border: '1px solid black' }}
-        />
-        {lignip === 1 && (
-            // Wrap the adjacent elements in a React Fragment
-          <>
-            <s>--</s>
-            <input
-              type="number"
-              placeholder="Your age"
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
-              style={{ width: 210, padding: '8px', borderRadius: '8px', border: '1px solid black' }}
-            />
-          </>
-        )}
-      </div>
-      <br /><br />
+      <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px',
+          padding: '5px',
+          margin: '5px'
+        }}>
+        <input
+          type="email"
+          placeholder="Your email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          style={{ padding: '8px', borderRadius: '8px', border: '1px solid black' }}
+        />
+        <input
+          type="password"
+          placeholder="Password: *********"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          style={{ padding: '8px', borderRadius: '8px', border: '1px solid black' }}
+        />
+        {lignip === 1 && (
+          <input
+            type="number"
+            placeholder="Your age"
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
+            style={{ width: '100%', maxWidth: '210px', padding: '8px', borderRadius: '8px', border: '1px solid black' }}
+          />
+        )}
+      </div>
+      <br />
       {lignip === 1 && (
-        <button onClick={handleSignUp} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Sign Up</button>
+        <button onClick={handleSignUp} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black', margin: '5px' }}>Sign Up</button>
       )}
       {lignip === 0 && (
-        <button onClick={handleSignIn} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Log In</button>
+        <button onClick={handleSignIn} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black', margin: '5px' }}>Log In</button>
       )}
       <br /><br />
-      {auth.currentUser && <button onClick={logOut} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Log Out</button>}
+      {auth.currentUser && <button onClick={logOut} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black', margin: '5px' }}>Log Out</button>}
       <br />
       {showRoleChoice && (
         <div>
