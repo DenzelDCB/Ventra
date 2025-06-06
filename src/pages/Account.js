@@ -189,14 +189,14 @@ function Home() {
           placeholder="Your email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          style={{ padding: '8px', borderRadius: '8px', border: '1px solid black' }}
+          style={{ padding: '8px', borderRadius: '8px', border: '1px solid black', width: '350px' }}
         />
         <input
           type="password"
           placeholder="Password: *********"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          style={{ padding: '8px', borderRadius: '8px', border: '1px solid black' }}
+          style={{ padding: '8px', borderRadius: '8px', border: '1px solid black', width: '350px' }}
         />
         {lignip === 1 && (
           <input
