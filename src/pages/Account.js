@@ -8,10 +8,13 @@ import { mentorSkills } from '../data/mentorSkills'; // Import the skills data
 
 export let logOutb = false;
 
+// This sessionStorage call runs on every render.
+// Consider moving it inside a useEffect or signIn/signOut handlers
+// if auth.currentUser might not be immediately available on initial render
 sessionStorage.setItem('user', auth.currentUser?.email || 'Previewer');
 
 function Home() {
-  const [lignip, setLignip] = useState(1);
+  const [lignip, setLignip] = useState(1); // 1 for Sign Up, 0 for Log In
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,7 +26,7 @@ function Home() {
     const { value, checked } = e.target;
 
     if (checked) {
-      if (selectedSkills.length < 3) { // Changed from 5 to 3
+      if (selectedSkills.length < 3) { // Max 3 skills
         setSelectedSkills([...selectedSkills, value]);
       }
     } else {
@@ -77,7 +80,7 @@ function Home() {
       }
 
       if (age > 25 && finalRole !== 'mentee') {
-        // Updated skill validation for min 1, max 3
+        // Validate skill selection for mentors (min 1, max 3)
         if (selectedSkills.length < 1 || selectedSkills.length > 3) {
           alert('You need to choose between 1 and 3 areas of expertise.');
           return;
@@ -112,6 +115,7 @@ function Home() {
         await setDoc(doc(db, "users", uid), {
           email,
           role: 'mentee',
+          // Mentees might not need skills initially, or you can adjust validation
           skills: selectedSkills,
         });
 
@@ -165,6 +169,7 @@ function Home() {
     <div>
       <h1>Welcome to Ventra</h1>
       <h3>Create an account or log in to continue.</h3>
+
       <div style={{border: '1px solid black', margin: '5px', padding: '5px', display: 'flex', gap: '10px', alignItems: 'center' }}>
         <button onClick={() => setLignip(0)} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Log in</button>
         <button onClick={() => setLignip(1)} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Sign up</button>
@@ -215,49 +220,25 @@ function Home() {
           <div style={{width: '500px', border: '1px solid black', margin: '5px', padding: '5px', borderRadius: '4px',}}>
             <label>Please choose between 1 and 3 areas of expertise.</label>
             <hr />
-            <h3>Programming</h3>
-            <hr />
-            {mentorSkills.filter(skill => ["Software Engineer (Backend Developer)", "Software Engineer (Frontend Developer)", "Software Engineer (Full Stack Developer)", "DevOps", "Java Developer", "JavaScript Developer", "Python Developer"].includes(skill.value)).map((skill) => (
-              <div key={skill.value}>
-                <label>{skill.label}: </label>
-                <input
-                  type="checkbox"
-                  name="skills"
-                  value={skill.value}
-                  onChange={handleSkillChange}
-                  checked={selectedSkills.includes(skill.value)}
-                  disabled={!selectedSkills.includes(skill.value) && selectedSkills.length >= 3} // Changed from 5 to 3
-                />
-              </div>
-            ))}
-            <h3>ML & AI</h3>
-            <hr />
-            {mentorSkills.filter(skill => ["Machine Learning Analyst", "Deep Learning Analyst", "Data Science Analyst"].includes(skill.value)).map((skill) => (
-              <div key={skill.value}>
-                <label>{skill.label}: </label>
-                <input
-                  type="checkbox"
-                  name="skills"
-                  value={skill.value}
-                  onChange={handleSkillChange}
-                  checked={selectedSkills.includes(skill.value)}
-                  disabled={!selectedSkills.includes(skill.value) && selectedSkills.length >= 3} // Changed from 5 to 3
-                />
-              </div>
-            ))}
-            <h3>Other Specializations</h3>
-            <hr />
-            {mentorSkills.filter(skill => ["Cloud Architect", "Cybersecurity Specialist", "UI/UX Designer"].includes(skill.value)).map((skill) => (
-              <div key={skill.value}>
-                <label>{skill.label}: </label>
-                <input
-                  type="checkbox"
-                  name="skills"
-                  value={skill.value}
-                  onChange={handleSkillChange}
-                  checked={selectedSkills.includes(skill.value)}
-                  disabled={!selectedSkills.includes(skill.value) && selectedSkills.length >= 3} // Changed from 5 to 3
-                />
+
+            {/* Dynamically render skill categories and checkboxes */}
+            {Array.from(new Set(mentorSkills.map(skill => skill.category))).map(category => (
+              <div key={category}>
+                <h3>{category}</h3>
+                <hr />
+                {mentorSkills.filter(skill => skill.category === category).map(skill => (
+                  <div key={skill.value}>
+                    <label>{skill.label}: </label>
+                    <input
+                      type="checkbox"
+                      name="skills"
+                      value={skill.value}
+                      onChange={handleSkillChange}
+                      checked={selectedSkills.includes(skill.value)}
+                      disabled={!selectedSkills.includes(skill.value) && selectedSkills.length >= 3}
+                    />
+                  </div>
+                ))}
               </div>
             ))}
           </div>
