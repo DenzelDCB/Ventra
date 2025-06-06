@@ -165,8 +165,9 @@ function Home() {
     <div>
       <h1>Welcome to Ventra</h1>
       <h3>Create an account or log in to continue.</h3>
-      <div style={{border: '1px solid black', margin: '5px', padding: '5px',}}>
-        <button onClick={() => setLignip(0)} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Log in</button> | <button onClick={() => setLignip(1)} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Sign up</button>
+      <div style={{border: '1px solid black', margin: '5px', padding: '5px', display: 'flex', gap: '10px', alignItems: 'center' }}>
+        <button onClick={() => setLignip(0)} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Log in</button>
+        <button onClick={() => setLignip(1)} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Sign up</button>
       </div>
 
       <div style={{border: '0px solid black', padding: '5px', margin: '5px'}}>
