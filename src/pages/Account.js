@@ -179,43 +179,18 @@ function Home() {
         alignItems: 'left',
         justifyContent: 'left'
       }}>
-        <button
-          onClick={() => setLignip(0)}
-          style={{
-            cursor: 'pointer',
-            padding: '8px',
-            borderRadius: '8px',
-            border: '0px',
-            backgroundColor: 'lightgray', // Default/previous color
-            color: 'black', // Default/previous color
-          }}
-        >
-          Log in
-        </button>
-        <button
-          onClick={() => setLignip(1)}
-          style={{
-            cursor: 'pointer',
-            padding: '8px',
-            borderRadius: '8px',
-            border: '0px',
-            backgroundColor: 'lightgray', // Default/previous color
-            color: 'black', // Default/previous color
-          }}
-        >
-          Sign up
-        </button>
+        <button onClick={() => setLignip(0)} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '0px', backgroundColor: 'white', }}>Log in</button>
+        <button onClick={() => setLignip(1)} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '0px', backgroundColor: 'white', }}>Sign up</button>
       </div>
 
       <div style={{
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
-        padding: '8px',
+        padding: '5px',
         margin: '5px',
         border: '1px solid black',
         borderRadius: '8px',
-        width: '400px',
       }}>
         <input
           type="email"
