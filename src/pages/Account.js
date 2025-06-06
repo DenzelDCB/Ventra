@@ -211,10 +211,11 @@ function Home() {
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
-        padding: '5px',
+        padding: '8px',
         margin: '5px',
         border: '1px solid black',
         borderRadius: '8px',
+        width: '400px',
       }}>
         <input
           type="email"
