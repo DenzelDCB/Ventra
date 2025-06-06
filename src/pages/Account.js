@@ -163,16 +163,15 @@ function Home() {
     <div>
       <h1>Welcome to Ventra</h1>
       <h3>Create an account or log in to continue.</h3>
-      <button>Mentor</button><button>Mentee</button>
-      <button onClick={() => setLignip(0)}>Log in</button>
-      <button onClick={() => setLignip(1)}>Sign up</button>
+      <button onClick={() => setLignip(0)} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Log in</button> | <button onClick={() => setLignip(1)} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Sign up</button>
 
       <div style={{border: '0px solid black', padding: '5px', margin: '5px'}}>
         <input
           type="email"
-          placeholder="Your email"
+          placeholder="Email: email@example.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          style={{padding: '8px', borderRadius: '8px', border: '1px solid black' }}
         />
         <s>- </s>
         <input
@@ -180,14 +179,15 @@ function Home() {
           placeholder="Password: *********"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          style={{padding: '8px', borderRadius: '8px', border: '1px solid black' }}
         />
         {lignip === 1 && (
           <input
             type="number"
-            placeholder="Your age (Not needed for Log in)"
+            placeholder="Age"
             value={age}
             onChange={(e) => setAge(e.target.value)}
-            style={{ width: 210 }}
+            style={{ width: 210, padding: '8px', borderRadius: '8px', border: '1px solid black' }}
           />
         )}
       </div>
