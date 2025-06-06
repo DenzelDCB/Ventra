@@ -16,7 +16,7 @@ function Home() {
   const [password, setPassword] = useState('');
   const [age, setAge] = useState('');
   const [showRoleChoice, setShowRoleChoice] = useState(false);
-  const { setRole } = useRole(); 
+  const { setRole } = useRole();
 
 const handleSkillChange = (e) => {
     const { value, checked } = e.target;
@@ -161,7 +161,7 @@ const proceedToSignUp = async (finalRole) => {
     try {
       if (auth.currentUser) {
         await auth.signOut();
-        logOutb = true; 
+        logOutb = true;
         localStorage['logOutb'] = logOutb;
         window.location.reload();
         return logOutb;
@@ -176,7 +176,7 @@ const proceedToSignUp = async (finalRole) => {
     <div>
       <h1>Welcome to Ventra</h1>
       <h3>Create an account or log in to continue.</h3>
-      <button>Mentor</button><button>Mentee</button> <button onclick="lignip=0">Log in</button><button onclick="lignip="1">Sign up</button>
+      <button>Mentor</button><button>Mentee</button> <button onClick={() => lignip = 0}>Log in</button><button onClick={() => lignip = 1}>Sign up</button>
       <div style={{border: '0px solid black', padding: '5px', margin: '5px'}}>
       <input
         type="email"
@@ -191,17 +191,23 @@ const proceedToSignUp = async (finalRole) => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      {<s>- </s>
-      <input
-        type="number"
-        placeholder="Your age (Not needed for Log in)"
-        value={age}
-        onChange={(e) => setAge(e.target.value)}
-        style={{ width: 210 }}
-      /> && lignip===1}
+      {lignip === 1 && (
+        <input
+          type="number"
+          placeholder="Your age (Not needed for Log in)"
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
+          style={{ width: 210 }}
+        />
+      )}
       </div>
       <br /><br />
-        {<button onClick={handleSignUp} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Sign Up</button> && lignip===1} {<button onClick={handleSignIn} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Log In</button> && lignip===0} 
+      {lignip === 1 && (
+        <button onClick={handleSignUp} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Sign Up</button>
+      )}
+      {lignip === 0 && (
+        <button onClick={handleSignIn} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Log In</button>
+      )}
       <br /><br />
       {auth.currentUser && <button onClick={logOut} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Log Out</button>}
       <br />
@@ -211,116 +217,116 @@ const proceedToSignUp = async (finalRole) => {
           <button onClick={() => { setRole('mentor'); proceedToSignUp('mentor'); }} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Mentor</button>
           <button onClick={() => proceedToSignUp('mentee')} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Mentee</button>
       <br /><br />
-      <div style={{width: '500px', border: '1px solid black', margin: '5px', padding: '5px', borderRadius: '4px',}}> 
-          <label>Please choose your best area of expertise. Max 5. Min 1</label>
-          <hr />
-          <h3>Programming</h3>
-        <hr />
-        <div><label>Software Engineer (Back-End): </label>
-        <input
-        type="checkbox"
-        name="skills"
-        value="Software Engineer (Backend Developer)"
-        onChange={handleSkillChange}
-        checked={selectedSkills.includes("Software Engineer (Backend Developer)")}
-        disabled={!selectedSkills.includes("Software Engineer (Backend Developer)") && selectedSkills.length >= 5}
-        />
-        </div>
-        <div><label>Software Engineer (Front-End): </label>
-        <input
-        type="checkbox"
-        name="skills"
-        value="Software Engineer (Frontend Developer)"
-        onChange={handleSkillChange}
-        checked={selectedSkills.includes("Software Engineer (Frontend Developer)")}
-        disabled={!selectedSkills.includes("Software Engineer (Frontend Developer)") && selectedSkills.length >= 5}
-        />
-        </div>
-        <div><label>Software Engineer (Full-Stack): </label>
-        <input
-        type="checkbox"
-        name="skills"
-        value="Software Engineer (Full Stack Developer)"
-        onChange={handleSkillChange}
-        checked={selectedSkills.includes("Software Engineer (Full Stack Developer)")}
-        disabled={!selectedSkills.includes("Software Engineer (Full Stack Developer)") && selectedSkills.length >= 5}
-        />
-        </div>      
-        <div><label>DevOps: </label>
-        <input
-        type="checkbox"
-        name="skills"
-        value="DevOps"
-        onChange={handleSkillChange}
-        checked={selectedSkills.includes("DevOps")}
-        disabled={!selectedSkills.includes("DevOps") && selectedSkills.length >= 5}
-        />
-        </div>   
-        <div><label>Java Developer: </label>
-        <input
-        type="checkbox"
-        name="skills"
-        value="Java Developer"
-        onChange={handleSkillChange}
-        checked={selectedSkills.includes("Java Developer")}
-        disabled={!selectedSkills.includes("Java Developer") && selectedSkills.length >= 5}
-        />
-        
-        </div>   
-        <div><label>JavaScript Developer: </label>
-        <input
-        type="checkbox"
-        name="skills"
-        value="JavaScript Developer"
-        onChange={handleSkillChange}
-        checked={selectedSkills.includes("JavaScript Developer")}
-        disabled={!selectedSkills.includes("JavaScript Developer") && selectedSkills.length >= 5}
-        />
-        
-        </div>  
-        <div><label>Python Developer: </label>
-        <input
-        type="checkbox"
-        name="skills"
-        value="Python Developer"
-        onChange={handleSkillChange}
-        checked={selectedSkills.includes("Python Developer")}
-        disabled={!selectedSkills.includes("Python Developer") && selectedSkills.length >= 5}
-        />
-        </div>  
-        <h3>ML & AI</h3>
-        <hr />
-        <div><label>Machine Learning Analyst: </label>
-        <input
-        type="checkbox"
-        name="skills"
-        value="Machine Learning Analyst"
-        onChange={handleSkillChange}
-        checked={selectedSkills.includes("Machine Learning Analyst")}
-        disabled={!selectedSkills.includes("Machine Learning Analyst") && selectedSkills.length >= 5}
-        />
-        </div>  
-        <div><label>Deep Learning Analyst: </label>
-        <input
-        type="checkbox"
-        name="skills"
-        value="Deep Learning Analyst"
-        onChange={handleSkillChange}
-        checked={selectedSkills.includes("Deep Learning Analyst")}
-        disabled={!selectedSkills.includes("Deep Learning Analyst") && selectedSkills.length >= 5}
-        />
-        </div> 
-        <div><label>Data Science Analyst: </label>
-        <input
-        type="checkbox"
-        name="skills"
-        value="Data Science Analyst"
-        onChange={handleSkillChange}
-        checked={selectedSkills.includes("Data Science Analyst")}
-        disabled={!selectedSkills.includes("Data Science Analyst") && selectedSkills.length >= 5}
-        />
-        </div>
-        </div>
+      <div style={{width: '500px', border: '1px solid black', margin: '5px', padding: '5px', borderRadius: '4px',}}>
+            <label>Please choose your best area of expertise. Max 5. Min 1</label>
+            <hr />
+            <h3>Programming</h3>
+            <hr />
+            <div><label>Software Engineer (Back-End): </label>
+            <input
+            type="checkbox"
+            name="skills"
+            value="Software Engineer (Backend Developer)"
+            onChange={handleSkillChange}
+            checked={selectedSkills.includes("Software Engineer (Backend Developer)")}
+            disabled={!selectedSkills.includes("Software Engineer (Backend Developer)") && selectedSkills.length >= 5}
+            />
+            </div>
+            <div><label>Software Engineer (Front-End): </label>
+            <input
+            type="checkbox"
+            name="skills"
+            value="Software Engineer (Frontend Developer)"
+            onChange={handleSkillChange}
+            checked={selectedSkills.includes("Software Engineer (Frontend Developer)")}
+            disabled={!selectedSkills.includes("Software Engineer (Frontend Developer)") && selectedSkills.length >= 5}
+            />
+            </div>
+            <div><label>Software Engineer (Full-Stack): </label>
+            <input
+            type="checkbox"
+            name="skills"
+            value="Software Engineer (Full Stack Developer)"
+            onChange={handleSkillChange}
+            checked={selectedSkills.includes("Software Engineer (Full Stack Developer)")}
+            disabled={!selectedSkills.includes("Software Engineer (Full Stack Developer)") && selectedSkills.length >= 5}
+            />
+            </div>
+            <div><label>DevOps: </label>
+            <input
+            type="checkbox"
+            name="skills"
+            value="DevOps"
+            onChange={handleSkillChange}
+            checked={selectedSkills.includes("DevOps")}
+            disabled={!selectedSkills.includes("DevOps") && selectedSkills.length >= 5}
+            />
+            </div>
+            <div><label>Java Developer: </label>
+            <input
+            type="checkbox"
+            name="skills"
+            value="Java Developer"
+            onChange={handleSkillChange}
+            checked={selectedSkills.includes("Java Developer")}
+            disabled={!selectedSkills.includes("Java Developer") && selectedSkills.length >= 5}
+            />
+
+            </div>
+            <div><label>JavaScript Developer: </label>
+            <input
+            type="checkbox"
+            name="skills"
+            value="JavaScript Developer"
+            onChange={handleSkillChange}
+            checked={selectedSkills.includes("JavaScript Developer")}
+            disabled={!selectedSkills.includes("JavaScript Developer") && selectedSkills.length >= 5}
+            />
+
+            </div>
+            <div><label>Python Developer: </label>
+            <input
+            type="checkbox"
+            name="skills"
+            value="Python Developer"
+            onChange={handleSkillChange}
+            checked={selectedSkills.includes("Python Developer")}
+            disabled={!selectedSkills.includes("Python Developer") && selectedSkills.length >= 5}
+            />
+            </div>
+            <h3>ML & AI</h3>
+            <hr />
+            <div><label>Machine Learning Analyst: </label>
+            <input
+            type="checkbox"
+            name="skills"
+            value="Machine Learning Analyst"
+            onChange={handleSkillChange}
+            checked={selectedSkills.includes("Machine Learning Analyst")}
+            disabled={!selectedSkills.includes("Machine Learning Analyst") && selectedSkills.length >= 5}
+            />
+            </div>
+            <div><label>Deep Learning Analyst: </label>
+            <input
+            type="checkbox"
+            name="skills"
+            value="Deep Learning Analyst"
+            onChange={handleSkillChange}
+            checked={selectedSkills.includes("Deep Learning Analyst")}
+            disabled={!selectedSkills.includes("Deep Learning Analyst") && selectedSkills.length >= 5}
+            />
+            </div>
+            <div><label>Data Science Analyst: </label>
+            <input
+            type="checkbox"
+            name="skills"
+            value="Data Science Analyst"
+            onChange={handleSkillChange}
+            checked={selectedSkills.includes("Data Science Analyst")}
+            disabled={!selectedSkills.includes("Data Science Analyst") && selectedSkills.length >= 5}
+            />
+            </div>
+            </div>
         </div>
       )}
       <p>Logging in might take a while, as well as signing up.</p>
