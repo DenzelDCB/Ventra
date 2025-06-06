@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { auth } from '../firebase';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
@@ -180,43 +179,19 @@ function Home() {
         alignItems: 'left',
         justifyContent: 'left'
       }}>
-        <button
-          onClick={() => setLignip(0)}
-          style={{
-            cursor: 'pointer',
-            padding: '8px',
-            borderRadius: '8px',
-            border: '0px',
-            backgroundColor: lignip === 0 ? 'green' : 'lightgray', // Dynamic background color
-            color: lignip === 0 ? 'white' : 'black', // Dynamic text color
-          }}
-        >
-          Log in
-        </button>
-        <button
-          onClick={() => setLignip(1)}
-          style={{
-            cursor: 'pointer',
-            padding: '8px',
-            borderRadius: '8px',
-            border: '0px',
-            backgroundColor: lignip === 1 ? 'green' : 'lightgray', // Dynamic background color
-            color: lignip === 1 ? 'white' : 'black', // Dynamic text color
-          }}
-        >
-          Sign up
-        </button>
+        <button onClick={() => setLignip(0)} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '0px', backgroundColor: 'white', }}>Log in</button>
+        <button onClick={() => setLignip(1)} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '0px', backgroundColor: 'white', }}>Sign up</button>
       </div>
 
       <div style={{
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
-        padding: '8px',
+        padding: '5px',
         margin: '5px',
         border: '1px solid black',
         borderRadius: '8px',
-        width: '435px',
+        width: '435px', 
       }}>
         <input
           type="email"
