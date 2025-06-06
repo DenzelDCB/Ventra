@@ -250,7 +250,6 @@ function Home() {
           </div>
         </div>
       )}
-      <p>Logging in might take a while, as well as signing up.</p>
     </div>
   );
 }
