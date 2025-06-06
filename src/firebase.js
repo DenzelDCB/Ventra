@@ -3,13 +3,13 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAMxsX6Yv645lPmJ1YdA8GLuIBq0_LwN0Y",
-  authDomain: "mentorship-project-153ff.firebaseapp.com",
-  projectId: "mentorship-project-153ff",
-  storageBucket: "mentorship-project-153ff.firebasestorage.app",
-  messagingSenderId: "1071201569910",
-  appId: "1:1071201569910:web:dcfbb7e6b94e319fd3e357",
-  measurementId: "G-17JLECVVEQ"
+  apiKey: "AIzaSyBz2gEh1kVx0GsZ8oMJBufI6d3xkaGelZ8",
+  authDomain: "ventra-3381c.firebaseapp.com",
+  projectId: "ventra-3381c",
+  storageBucket: "ventra-3381c.firebasestorage.app",
+  messagingSenderId: "849720487539",
+  appId: "1:849720487539:web:e517be9bc82c8fa489c406",
+  measurementId: "G-QWRKHLD302"
 };
 
 const app = initializeApp(firebaseConfig);
