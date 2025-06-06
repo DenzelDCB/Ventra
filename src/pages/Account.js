@@ -186,8 +186,8 @@ function Home() {
             padding: '8px',
             borderRadius: '8px',
             border: '0px',
-            backgroundColor: lignip === 0 ? 'green' : 'lightgray', // Dynamic background color
-            color: lignip === 0 ? 'white' : 'black', // Dynamic text color
+            backgroundColor: 'lightgray', // Default/previous color
+            color: 'black', // Default/previous color
           }}
         >
           Log in
@@ -199,8 +199,8 @@ function Home() {
             padding: '8px',
             borderRadius: '8px',
             border: '0px',
-            backgroundColor: lignip === 1 ? 'green' : 'lightgray', // Dynamic background color
-            color: lignip === 1 ? 'white' : 'black', // Dynamic text color
+            backgroundColor: 'lightgray', // Default/previous color
+            color: 'black', // Default/previous color
           }}
         >
           Sign up
