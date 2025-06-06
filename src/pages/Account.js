@@ -10,6 +10,7 @@ export let logOutb = false;
 sessionStorage.setItem('user', auth.currentUser?.email || 'Previewer');
 
 function Home() {
+  let lignip = 1
   let [selectedSkills, setSelectedSkills] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -174,8 +175,9 @@ const proceedToSignUp = async (finalRole) => {
   return (
     <div>
       <h1>Welcome to Ventra</h1>
-      <p>Create an account or log in to continue.</p>
-
+      <h3>Create an account or log in to continue.</h3>
+      <button>Mentor</button><button>Mentee</button> <button onclick="lignip=0">Log in</button><button onclick="lignip="1">Sign up</button>
+      <div style={{border: '0px solid black', padding: '5px', margin: '5px'}}>
       <input
         type="email"
         placeholder="Your email"
@@ -189,16 +191,17 @@ const proceedToSignUp = async (finalRole) => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <s>- </s>
+      {<s>- </s>
       <input
         type="number"
         placeholder="Your age (Not needed for Log in)"
         value={age}
         onChange={(e) => setAge(e.target.value)}
         style={{ width: 210 }}
-      />
+      /> && lignip===1}
+      </div>
       <br /><br />
-      <button onClick={handleSignUp} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Sign Up</button> <b> or </b> <button onClick={handleSignIn} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Log In</button> 
+        {<button onClick={handleSignUp} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Sign Up</button> && lignip===1} {<button onClick={handleSignIn} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Log In</button> && lignip===0} 
       <br /><br />
       {auth.currentUser && <button onClick={logOut} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Log Out</button>}
       <br />
