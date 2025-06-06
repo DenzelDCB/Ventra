@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { auth } from '../firebase';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
@@ -186,8 +187,8 @@ function Home() {
             padding: '8px',
             borderRadius: '8px',
             border: '0px',
-            backgroundColor: 'lightgray', // Default/previous color
-            color: 'black', // Default/previous color
+            backgroundColor: lignip === 0 ? 'green' : 'lightgray', // Dynamic background color
+            color: lignip === 0 ? 'white' : 'black', // Dynamic text color
           }}
         >
           Log in
@@ -199,8 +200,8 @@ function Home() {
             padding: '8px',
             borderRadius: '8px',
             border: '0px',
-            backgroundColor: 'lightgray', // Default/previous color
-            color: 'black', // Default/previous color
+            backgroundColor: lignip === 1 ? 'green' : 'lightgray', // Dynamic background color
+            color: lignip === 1 ? 'white' : 'black', // Dynamic text color
           }}
         >
           Sign up
@@ -215,7 +216,7 @@ function Home() {
         margin: '5px',
         border: '1px solid black',
         borderRadius: '8px',
-        width: '400px',
+        width: '435px',
       }}>
         <input
           type="email"
