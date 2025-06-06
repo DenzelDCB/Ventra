@@ -1,0 +1,15 @@
+export const mentorSkills = [
+  { label: "Software Engineer (Back-End)", value: "Software Engineer (Backend Developer)" },
+  { label: "Software Engineer (Front-End)", value: "Software Engineer (Frontend Developer)" },
+  { label: "Software Engineer (Full-Stack)", value: "Software Engineer (Full Stack Developer)" },
+  { label: "DevOps", value: "DevOps" },
+  { label: "Java Developer", value: "Java Developer" },
+  { label: "JavaScript Developer", value: "JavaScript Developer" },
+  { label: "Python Developer", value: "Python Developer" },
+  { label: "Machine Learning Analyst", value: "Machine Learning Analyst" },
+  { label: "Deep Learning Analyst", value: "Deep Learning Analyst" },
+  { label: "Data Science Analyst", value: "Data Science Analyst" },
+  { label: "Cloud Architect", value: "Cloud Architect" },
+  { label: "Cybersecurity Specialist", value: "Cybersecurity Specialist" },
+  { label: "UI/UX Designer", value: "UI/UX Designer" },
+];
