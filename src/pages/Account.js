@@ -160,32 +160,38 @@ function Home() {
     }
   };
 
+  // Group skills by category for easier rendering
+  const skillsByCategory = mentorSkills.reduce((acc, skill) => {
+    (acc[skill.category] = acc[skill.category] || []).push(skill);
+    return acc;
+  }, {});
+
   return (
     <div>
       <h1>Welcome to Ventra</h1>
       <h3>Create an account or log in to continue.</h3>
 
       <div style={{
-          margin: '15px 5px',
-          padding: '5px',
-          display: 'flex',
-          gap: '15px',
-          alignItems: 'left',
-          justifyContent: 'left'
-        }}>
+        margin: '15px 5px',
+        padding: '5px',
+        display: 'flex',
+        gap: '15px',
+        alignItems: 'left',
+        justifyContent: 'left'
+      }}>
         <button onClick={() => setLignip(0)} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '0px', backgroundColor: 'white', }}>Log in</button>
         <button onClick={() => setLignip(1)} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '0px', backgroundColor: 'white', }}>Sign up</button>
       </div>
-  
+
       <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '10px',
-          padding: '5px',
-          margin: '5px',
-          border: '1px solid black',
-          borderRadius: '8px',
-        }}>
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '10px',
+        padding: '5px',
+        margin: '5px',
+        border: '1px solid black',
+        borderRadius: '8px',
+      }}>
         <input
           type="email"
           placeholder="Your email"
@@ -226,27 +232,34 @@ function Home() {
           <button onClick={() => { setRole('mentor'); proceedToSignUp('mentor'); }} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Mentor</button>
           <button onClick={() => proceedToSignUp('mentee')} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Mentee</button>
           <br /><br />
-          <div style={{width: '500px', border: '1px solid black', margin: '5px', padding: '5px', borderRadius: '4px',}}>
+          <div style={{ width: 'auto', border: '1px solid black', margin: '5px', padding: '5px', borderRadius: '4px' }}>
             <label>Please choose between 1 and 3 areas of expertise.</label>
             <hr />
 
-            {Array.from(new Set(mentorSkills.map(skill => skill.category))).map(category => (
-              <div key={category}>
+            {Object.entries(skillsByCategory).map(([category, skills]) => (
+              <div key={category} style={{ marginBottom: '20px' }}>
                 <h3>{category}</h3>
                 <hr />
-                {mentorSkills.filter(skill => skill.category === category).map(skill => (
-                  <div key={skill.value}>
-                    <label>{skill.label}: </label>
-                    <input
-                      type="checkbox"
-                      name="skills"
-                      value={skill.value}
-                      onChange={handleSkillChange}
-                      checked={selectedSkills.includes(skill.value)}
-                      disabled={!selectedSkills.includes(skill.value) && selectedSkills.length >= 3}
-                    />
-                  </div>
-                ))}
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', // Responsive grid
+                  gap: '10px'
+                }}>
+                  {skills.map(skill => (
+                    <div key={skill.value} style={{ display: 'flex', alignItems: 'center' }}>
+                      <input
+                        type="checkbox"
+                        name="skills"
+                        value={skill.value}
+                        onChange={handleSkillChange}
+                        checked={selectedSkills.includes(skill.value)}
+                        disabled={!selectedSkills.includes(skill.value) && selectedSkills.length >= 3}
+                        style={{ marginRight: '5px' }}
+                      />
+                      <label>{skill.label}</label>
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
