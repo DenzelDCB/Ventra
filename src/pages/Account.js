@@ -170,8 +170,8 @@ function Home() {
           padding: '5px',
           display: 'flex',
           gap: '15px',
-          alignItems: 'center',
-          justifyContent: 'center'
+          alignItems: 'left',
+          justifyContent: 'left'
         }}>
         <button onClick={() => setLignip(0)} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Log in</button>
         <button onClick={() => setLignip(1)} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>Sign up</button>
