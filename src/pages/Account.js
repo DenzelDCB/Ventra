@@ -50,7 +50,7 @@ function Home() {
     const numericAge = parseInt(age);
     if (!email) return showError("Please enter your email.");
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return showVerify(emailRegex.test(email));
+    if (emailRegex.test(email) === false) return showError("Email does not represent a real email.")
     if (!password || password.length < 6) return showError("Password must be at least 6 characters long.");
     if (isNaN(numericAge)) return showError("Please enter a valid age.");
     if (numericAge < 11 || numericAge > 90) return showError("Age must be between 11 and 90.");
