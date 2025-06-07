@@ -18,6 +18,7 @@ function Home() {
   const [age, setAge] = useState('');
   const [showRoleChoice, setShowRoleChoice] = useState(false);
   const [error, setError] = useState('');
+  const [verify, verifyNote] = useState('')
   const { setRole } = useRole();
 
   const handleSkillChange = (e) => {
@@ -34,6 +35,10 @@ function Home() {
   const showError = (msg) => {
     setError(msg);
     setTimeout(() => setError(''), 5000);
+  };
+  const showVerify = (msg) => {
+    verifyNote(msg);
+    setTimeout(() => verifyNote(''),5000)
   };
 
   const handleSignUp = async () => {
@@ -74,7 +79,7 @@ function Home() {
       });
 
       setRole(finalRole);
-      showError(`Verification email sent. Please check your inbox.`);
+      showVerify(`Verification email sent. Please check your inbox.`);
     } catch (error) {
       showError(error.message + ' 🔒');
     }
@@ -84,7 +89,7 @@ function Home() {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       if (!userCredential.user.emailVerified) {
-        showError("Please verify your email before logging in.");
+        showError("Email must be verified before logging in.");
         return;
       }
 
@@ -166,6 +171,16 @@ function Home() {
           maxWidth: '400px',
           margin: '10px 0'
         }}>{error}</div>
+      )}
+      {verify && (
+        <div style={{
+          color: 'black',
+          backgroundColor: 'lightgreen',
+          padding: '10px',
+          borderRadius: '5px',
+          maxWidth: '400px',
+          margin: '10px 0'
+        }}>{verify}</div>
       )}
 
       <div style={{
