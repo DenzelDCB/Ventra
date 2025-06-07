@@ -40,17 +40,17 @@ const AppContent = ({ page, setPage }) => {
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-        <button onClick={() => setPage('home1')}>Home</button>
+        <button onClick={() => setPage('home1')} style={{border: '0px', backgroundColor: 'white', }}>Home</button>
         {showMentorButton && (
-          <button onClick={() => setPage('mentor1')}>Mentor Profile</button>
+          <button onClick={() => setPage('mentor1')} style={{border: '0px', backgroundColor: 'white', }}>Mentor Profile</button>
         )}
         {showMenteeButton && logOutb !== 'true' && (
-          <button onClick={() => setPage('mentee1')}>Mentee Dashboard</button>
+          <button onClick={() => setPage('mentee1')} style={{border: '0px', backgroundColor: 'white', }}>Mentee Dashboard</button>
         )}
         {role && userEmail && isVerified && (
-          <button onClick={() => setPage('chat1')}>Chat</button>
+          <button onClick={() => setPage('chat1')} style={{border: '0px', backgroundColor: 'white', }}>Chat</button>
         )}
-        <button onClick={() => setPage('search1')}>Search Mentors</button>
+        {role && userEmail && isVerified && (<button onClick={() => setPage('search1')} style={{border: '0px', backgroundColor: 'white', }}>Search Mentors</button>)}
         <button onClick={() => setPage('home2')}>Sign Up | Log in</button>
       </div>
       <hr />
