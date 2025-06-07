@@ -1,5 +1,3 @@
-// Today - Add ReCAPTCHA or somthing like that before user can siGN UP, and make sure user can't access mentee page or chat or mentor either if not verified email address.
-
 import React, { useEffect, useState } from 'react';
 import { auth, db } from './firebase';
 import { doc, getDoc } from 'firebase/firestore';
@@ -17,53 +15,43 @@ const logOutb = localStorage.getItem('logOutb');
 
 const AppContent = ({ page, setPage }) => {
   const { role, setRole } = useRole();
+  const user = auth.currentUser;
+  const isVerified = user?.emailVerified;
 
   useEffect(() => {
     const fetchRoleIfNeeded = async () => {
-      if (!role && auth.currentUser) {
-        const uid = auth.currentUser.uid;
+      if (!role && user) {
+        const uid = user.uid;
         const docRef = doc(db, 'users', uid);
         const userDoc = await getDoc(docRef);
         if (userDoc.exists()) {
           const data = userDoc.data();
-          console.log('Fetched role from Firestore:', data.role); 
           setRole(data.role);
           sessionStorage['role'] = data.role;
         }
       }
     };
-
     fetchRoleIfNeeded();
-  }, [role, setRole]);
+  }, [role, setRole, user]);
 
-  const showMentorButton = role === 'mentor' && sessionStorage['role'] === 'mentor' && userEmail && userEmail !== 'Previewer';
-  const showMenteeButton = role === 'mentee' && sessionStorage['role'] === 'mentee' && userEmail && userEmail !== 'Previewer';
+  const showMentorButton = role === 'mentor' && sessionStorage['role'] === 'mentor' && isVerified && userEmail && userEmail !== 'Previewer';
+  const showMenteeButton = role === 'mentee' && sessionStorage['role'] === 'mentee' && isVerified && userEmail && userEmail !== 'Previewer';
 
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-        <button onClick={() => setPage('home1')} style={{ border: '0px', backgroundColor: 'white', cursor: 'pointer' }}>Home</button>
+        <button onClick={() => setPage('home1')}>Home</button>
         {showMentorButton && (
-          <button onClick={() => setPage('mentor1')} style={{ border: '0px', backgroundColor: 'white', cursor: 'pointer' }}>
-            Mentor Profile
-          </button>
+          <button onClick={() => setPage('mentor1')}>Mentor Profile</button>
         )}
         {showMenteeButton && logOutb !== 'true' && (
-          <button onClick={() => setPage('mentee1')} style={{ border: '0px', backgroundColor: 'white', cursor: 'pointer' }}>
-            Mentee Dashboard
-          </button>
+          <button onClick={() => setPage('mentee1')}>Mentee Dashboard</button>
         )}
-        {role && userEmail && (
-          <button onClick={() => setPage('chat1')} style={{ border: '0px', backgroundColor: 'white', cursor: 'pointer' }}>
-          Chat
-          </button>
+        {role && userEmail && isVerified && (
+          <button onClick={() => setPage('chat1')}>Chat</button>
         )}
-        <button onClick={() => setPage('search1')} style={{ border: '0px', backgroundColor: 'white', cursor: 'pointer' }}>
-          Search Mentors
-        </button>
-        <button onClick={() => setPage('home2')} style={{ cursor: 'pointer', padding: '8px', borderRadius: '8px', border: '1px solid black' }}>
-          Sign Up | Log in
-        </button>
+        <button onClick={() => setPage('search1')}>Search Mentors</button>
+        <button onClick={() => setPage('home2')}>Sign Up | Log in</button>
       </div>
       <hr />
       {page === 'home1' && <Home />}
