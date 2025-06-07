@@ -50,16 +50,20 @@ function Home() {
       showError('Please complete the CAPTCHA correctly.');
       return;
     }
-    showVerify('Sign up successful! (replace with your logic)');
+    showVerify('Sign up successful!');
   };
   
-  const handleSignUp = async () => {
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    if (!captchaValid) return showError('Please complete the CAPTCHA correctly.');
+  
     const numericAge = parseInt(age);
     if (!email) return showError("Please enter your email.");
     if (!password || password.length < 6) return showError("Password must be at least 6 characters long.");
     if (isNaN(numericAge)) return showError("Please enter a valid age.");
     if (numericAge < 11 || numericAge > 90) return showError("Age must be between 11 and 90.");
-
+  
+    showVerify('Sign up successful!');
     sessionStorage.setItem('age', numericAge);
     if (numericAge <= 25) {
       setRole('mentee');
