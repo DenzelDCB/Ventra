@@ -51,7 +51,7 @@ const AppContent = ({ page, setPage }) => {
           <button onClick={() => setPage('chat1')} style={{border: '0px', backgroundColor: 'white', }}>Chat</button>
         )}
         {role && userEmail && isVerified && (<button onClick={() => setPage('search1')} style={{border: '0px', backgroundColor: 'white', }}>Search Mentors</button>)}
-        <button onClick={() => setPage('home2')} style={{background: "linear-gradient(to right, lightblue, lightgrey)", border: '1px solid black', padding: '8px', borderRadius: '8px',}}>Sign Up | Log in</button>
+        <button onClick={() => setPage('home2')} style={{background: "linear-gradient(to right, lightblue, lightgrey)", border: '1px solid black', padding: '8px', borderRadius: '8px', cursor: 'pointer',}}>Sign Up | Log in</button>
       </div>
       <hr />
       {page === 'home1' && <Home />}
