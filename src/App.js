@@ -1,5 +1,4 @@
-// Open Command Prompt, then open CMD.txt, 
-// copy and paste line 1 of the file then run npm start in Command Prompt
+// Today - Add ReCAPTCHA or somthing like that before user can siGN UP, and make sure user can't access mentee page or chat or mentor either if not verified email address.
 
 import React, { useEffect, useState } from 'react';
 import { auth, db } from './firebase';
