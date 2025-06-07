@@ -222,9 +222,7 @@ function Home() {
             style={{ width: '100%', maxWidth: '210px', padding: '8px', borderRadius: '8px', border: '1px solid black' }}
           />
         )}
-        {lignip === 1 && (<ReCAPTCHA
-        sitekey="6LdGw1grAAAAAMFmC0P-UGkPPU0Y0Wdt9h1hMj9P"
-        onChange={handleCaptchaChange} />)}
+        {lignip === 1 && (<ReCAPTCHA sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY} onChange={handleCaptchaChange} />)}
       </div>
       <br />
       {lignip === 1 && (
