@@ -17,11 +17,12 @@ function Home() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [age, setAge] = useState('');
+  const [captchaValid, setCaptchaValid] = useState(false);
   const [showRoleChoice, setShowRoleChoice] = useState(false);
   const [error, setError] = useState('');
   const [verify, verifyNote] = useState('')
   const { setRole } = useRole();
-
+  
   const handleSkillChange = (e) => {
     const { value, checked } = e.target;
     if (checked) {
@@ -42,6 +43,16 @@ function Home() {
     setTimeout(() => verifyNote(''),5000)
   };
 
+  
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (!captchaValid) {
+      showError('Please complete the CAPTCHA correctly.');
+      return;
+    }
+    showVerify('Sign up successful! (replace with your logic)');
+  };
+  
   const handleSignUp = async () => {
     const numericAge = parseInt(age);
     if (!email) return showError("Please enter your email.");
