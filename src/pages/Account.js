@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { auth } from '../firebase';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
@@ -21,6 +22,12 @@ function Home() {
   const [verify, verifyNote] = useState('')
   const { setRole } = useRole();
 
+  const SignUP = () => {
+    const [disableSubmit, setDisableSubmit] = useState(true);
+  
+    const handleCaptchaChange = useCallback(() => {
+      setDisableSubmit(false);
+  }, []);
   const handleSkillChange = (e) => {
     const { value, checked } = e.target;
     if (checked) {
@@ -218,11 +225,13 @@ function Home() {
             style={{ width: '100%', maxWidth: '210px', padding: '8px', borderRadius: '8px', border: '1px solid black' }}
           />
         )}
+        {lignip === 1 && (<ReCAPTCHA
+        sitekey="6LdGw1grAAAAAMFmC0P-UGkPPU0Y0Wdt9h1hMj9P"
+        onChange={handleCaptchaChange} />)}
       </div>
-
       <br />
       {lignip === 1 && (
-        <button onClick={handleSignUp} style={{ padding: '8px', borderRadius: '8px', border: '1px solid black', margin: '5px' }}>
+        <button onClick={handleSignUp} style={{ padding: '8px', borderRadius: '8px', border: '1px solid black', margin: '5px' }} disabled={disableSubmit}>
           Sign Up
         </button>
       )}
