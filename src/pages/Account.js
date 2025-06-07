@@ -92,7 +92,7 @@ function Home() {
         });
 
         setRole(finalRole);
-        alert(`Signed up as a ${finalRole}.`);
+        alert(`Signed up as a ${finalRole}. Please reload page.`);
       } else if (age >= 11 && age <= 25) {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const uid = userCredential.user.uid;
@@ -103,14 +103,15 @@ function Home() {
         });
 
         setRole(finalRole);
-        alert(`Signed up as a ${finalRole}.`);
+        alert(`Signed up as a ${finalRole}. Please reload page.`);
       } else if (finalRole === 'mentee') {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const uid = userCredential.user.uid;
 
         await setDoc(doc(db, "users", uid), {
           email,
-          role: 'mentee'
+          role: 'mentee',
+          skills: selectedSkills,
         });
 
         setRole(finalRole);
@@ -190,7 +191,6 @@ function Home() {
         margin: '5px',
         border: '1px solid black',
         borderRadius: '8px',
-        width: '435px', 
       }}>
         <input
           type="email"
