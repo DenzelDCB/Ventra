@@ -225,7 +225,7 @@ function Home() {
           />
         )}
       </div>
-      {lignip === 1 && (<div style={{border: '1px solid black', borderRadius: '8px', padding: '8px', margin: '8px', width: '500px',}}><DiceCaptcha onVerify={setCaptchaValid} /></div>)}
+      {lignip === 1 && (<div style={{border: '1px solid black', borderRadius: '8px', padding: '8px', margin: '8px', width: '400px',}}><DiceCaptcha onVerify={setCaptchaValid} /></div>)}
       <br />
       {lignip === 1 && (
         <button onClick={handleSignUp} disabled={!captchaValid} style={{ padding: '8px', borderRadius: '8px', border: '1px solid black', margin: '5px', cursor: 'pointer', }}>
