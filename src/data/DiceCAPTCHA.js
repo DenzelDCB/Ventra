@@ -47,7 +47,7 @@ function DiceCaptcha({ onVerify }) {
           style={{ width: '100%', maxWidth: '210px', padding: '8px', borderRadius: '8px', border: '1px solid black' }}
         />
       </label>
-      <button onClick={handleCheck} style={{ marginLeft: '10px' }}>
+      <button onClick={handleCheck} style={{ padding: '8px', borderRadius: '8px', border: '1px solid black', margin: '10px', cursor: 'pointer', }}>
         Submit
       </button>
       {rolled && <p>{message}</p>}
