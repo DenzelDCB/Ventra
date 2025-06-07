@@ -21,11 +21,8 @@ function Home() {
   const [error, setError] = useState('');
   const [verify, verifyNote] = useState('')
   const { setRole } = useRole();
-
-  const SignUP = () => {
-    const [disableSubmit, setDisableSubmit] = useState(true);
-  
-    const handleCaptchaChange = useCallback(() => {
+  const [disableSubmit, setDisableSubmit] = useState(true);
+  const handleCaptchaChange = useCallback(() => {
       setDisableSubmit(false);
   }, []);
   const handleSkillChange = (e) => {
