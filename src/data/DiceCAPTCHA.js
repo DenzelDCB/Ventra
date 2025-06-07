@@ -44,7 +44,7 @@ function DiceCaptcha({ onVerify }) {
           type="number"
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
-          style={{ marginLeft: '10px' }}
+          style={{ width: '100%', maxWidth: '210px', padding: '8px', borderRadius: '8px', border: '1px solid black' }}
         />
       </label>
       <button onClick={handleCheck} style={{ marginLeft: '10px' }}>
