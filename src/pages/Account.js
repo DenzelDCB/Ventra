@@ -165,7 +165,7 @@ function Home() {
       {error && (
         <div style={{
           color: 'white',
-          backgroundColor: 'red',
+          backgroundColor: 'darkred',
           padding: '10px',
           borderRadius: '5px',
           maxWidth: '400px',
