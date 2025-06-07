@@ -2,10 +2,8 @@ import { useEffect, useState } from 'react';
 import { collection, getDocs, query, where, doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { db, auth } from '../firebase';
 import defaultUser from './user-default.png';
-import { useRole } from './RoleContext';
 
 function MentorSearch() {
-  const { role } = useRole();
   const [mentors, setMentors] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
@@ -39,34 +37,32 @@ function MentorSearch() {
     fetchMentors();
   }, []);
 
+  const requestMentor = async mentor => {
+    const user = auth.currentUser;
+    if (!user) {
+      alert('Please log in to request a mentor.');
+      return;
+    }
+    const requestId = `${mentor.id}__${user.uid}`;
+    try {
+      await setDoc(doc(db, 'mentorRequests', requestId), {
+        mentorId: mentor.id,
+        requesterId: user.uid,
+        status: 'pending',
+        createdAt: serverTimestamp()
+      });
+      alert(`Requested mentor ${mentor.email}.`);
+    } catch (err) {
+      console.error('Error requesting mentor:', err);
+      alert('Failed to send request.');
+    }
+  };
 
   const filtered = searchTerm
     ? mentors.filter(m =>
         m.skills.some(s => s.toLowerCase().includes(searchTerm.toLowerCase()))
       )
     : mentors;
-
-    const requestMentor = async mentor => {
-      const user = auth.currentUser;
-      if (!user) {
-        alert('Please log in to request a mentor.');
-        return;
-      }
-      const requestId = `${mentor.id}__${user.uid}`;
-      try {
-        await setDoc(doc(db, 'mentorRequests', requestId), {
-          mentorId: mentor.id, 
-          menteeId: user.uid,  
-          status: 'pending',
-          createdAt: serverTimestamp()
-        });
-        alert(`Requested mentor ${mentor.email}.`);
-      } catch (err) {
-        console.error('Error requesting mentor:', err);
-        alert('Failed to send request.');
-      }
-    };
-
 
   return (
     <div className="App">
@@ -88,8 +84,8 @@ function MentorSearch() {
               <ul style={{ textAlign: 'left' }}>
                 {m.skills.length > 0
                   ? m.skills.map((sk, i) => (
-                      <li key={i} style={{ marginBottom: '8px', margin: '10px', }}>
-                        <span style={{ backgroundColor: '#D5D5D5FF', borderRadius: '16px', padding: '5px', margin: '10px',}}>
+                      <li key={i} style={{ marginBottom: '8px', margin: '10px' }}>
+                        <span style={{ backgroundColor: '#D5D5D5FF', borderRadius: '16px', padding: '5px', margin: '10px' }}>
                           <small>{sk}</small>
                         </span>
                         <br />
@@ -99,14 +95,12 @@ function MentorSearch() {
                   : <li>No skills listed.</li>
                 }
               </ul>
-              {(
-                <button
-                  style={{ padding: '8px', borderRadius: '8px', cursor: 'pointer', border: '1px solid black', }}
-                  onClick={() => requestMentor(m)}
-                >
-                    {role === 'mentee' && 'Request Mentor'}{role === 'mentor' && 'Connect with Mentor'}
-                </button>
-              )}
+              <button
+                style={{ padding: '8px', borderRadius: '8px', cursor: 'pointer', border: '1px solid black' }}
+                onClick={() => requestMentor(m)}
+              >
+                Request Mentor
+              </button>
             </div>
           ))
         ) : (
