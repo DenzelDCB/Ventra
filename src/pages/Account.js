@@ -224,9 +224,8 @@ function Home() {
             style={{ width: '100%', maxWidth: '210px', padding: '8px', borderRadius: '8px', border: '1px solid black' }}
           />
         )}
-        {lignip === 1 && (<DiceCaptcha onVerify={setCaptchaValid} />)}
       </div>
-
+      {lignip === 1 && <div style={{border: '1px solid black', borderRadius: '8px', padding: '8px', margin: '8px',}}><DiceCaptcha onVerify={setCaptchaValid} /></div>)}
       <br />
       {lignip === 1 && (
         <button onClick={handleSignUp} disabled={!captchaValid} style={{ padding: '8px', borderRadius: '8px', border: '1px solid black', margin: '5px' }}>
