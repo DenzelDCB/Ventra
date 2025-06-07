@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { auth } from '../firebase';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
+import DiceCaptcha from '../data/DiceCAPTCHA'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { useRole } from './RoleContext';
 import { mentorSkills } from '../data/mentorSkills';
@@ -218,11 +219,12 @@ function Home() {
             style={{ width: '100%', maxWidth: '210px', padding: '8px', borderRadius: '8px', border: '1px solid black' }}
           />
         )}
+        {lignip === 1 && (<DiceCaptcha onVerify={setCaptchaValid} />)}
       </div>
 
       <br />
       {lignip === 1 && (
-        <button onClick={handleSignUp} style={{ padding: '8px', borderRadius: '8px', border: '1px solid black', margin: '5px' }}>
+        <button onClick={handleSignUp} disabled={!captchaValid} style={{ padding: '8px', borderRadius: '8px', border: '1px solid black', margin: '5px' }}>
           Sign Up
         </button>
       )}
