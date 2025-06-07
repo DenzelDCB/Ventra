@@ -42,16 +42,6 @@ function Home() {
     verifyNote(msg);
     setTimeout(() => verifyNote(''),5000)
   };
-
-  
-  const handleSubmit = e => {
-    e.preventDefault();
-    if (!captchaValid) {
-      showError('Please complete the CAPTCHA correctly.');
-      return;
-    }
-    showVerify('Sign up successful!');
-  };
   
   const handleSignUp = async (e) => {
     e.preventDefault();
