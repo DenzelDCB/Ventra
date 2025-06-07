@@ -24,7 +24,6 @@ function App() {
   useEffect(() => {
     if (!userId) return;
 
-    // Listen to accepted mentorRequests where current user is mentee
     const q = query(
       collection(db, 'mentorRequests'),
       where('menteeId', '==', userId),
@@ -33,9 +32,8 @@ function App() {
 
     const unsubscribe = onSnapshot(q, async snapshot => {
       const requests = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      
-      // Fetch mentor emails for display
-      const mentorsWithEmail = await Promise.all(
+
+      const mentorsWithDetails = await Promise.all(
         requests.map(async req => {
           const mentorDoc = await getDoc(doc(db, 'users', req.mentorId));
           const mentorEmail = mentorDoc.exists() ? mentorDoc.data().email : 'Unknown Mentor';
@@ -43,10 +41,12 @@ function App() {
             chatId: req.id,
             mentorId: req.mentorId,
             mentorEmail,
+            requesterId: req.requesterId || 'Unknown',
           };
         })
       );
-      setAcceptedMentors(mentorsWithEmail);
+
+      setAcceptedMentors(mentorsWithDetails);
     });
 
     return () => unsubscribe();
@@ -63,7 +63,9 @@ function App() {
           <ul>
             {acceptedMentors.map(m => (
               <li key={m.chatId}>
-                Mentor: <b>{m.mentorEmail}</b> (Chat ID: {m.chatId.slice(0,6)})
+                Mentor: <b>{m.mentorEmail}</b> <br />
+                Chat ID: {m.chatId.slice(0, 6)} <br />
+                Requester ID: <i>{m.requesterId}</i>
               </li>
             ))}
           </ul>
